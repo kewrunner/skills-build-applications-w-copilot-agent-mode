@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const getBaseUrl = () => {
+const getApiUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev`;
-  }
-  return 'http://localhost:8000';
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : 'http://localhost:8000/api/teams/';
 };
 
 export default function Teams() {
@@ -13,7 +12,7 @@ export default function Teams() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${getBaseUrl()}/api/teams/`)
+    fetch(getApiUrl())
       .then((response) => response.json())
       .then((data) => {
         setTeams(Array.isArray(data) ? data : data.results || []);

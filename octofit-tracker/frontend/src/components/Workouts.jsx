@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const getBaseUrl = () => {
+const getApiUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev`;
-  }
-  return 'http://localhost:8000';
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+    : 'http://localhost:8000/api/workouts/';
 };
 
 export default function Workouts() {
@@ -13,7 +12,7 @@ export default function Workouts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${getBaseUrl()}/api/workouts/`)
+    fetch(getApiUrl())
       .then((response) => response.json())
       .then((data) => {
         setWorkouts(Array.isArray(data) ? data : data.results || []);
