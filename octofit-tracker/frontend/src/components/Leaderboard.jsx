@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const getBaseUrl = () => {
+const getApiUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev`;
-  }
-  return 'http://localhost:8000';
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+    : 'http://localhost:8000/api/leaderboard/';
 };
 
 export default function Leaderboard() {
@@ -13,7 +12,7 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${getBaseUrl()}/api/leaderboard/`)
+    fetch(getApiUrl())
       .then((response) => response.json())
       .then((data) => {
         setLeaderboard(Array.isArray(data) ? data : data.results || []);

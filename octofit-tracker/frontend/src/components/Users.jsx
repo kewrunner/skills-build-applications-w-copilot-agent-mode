@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const getBaseUrl = () => {
+const getApiUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev`;
-  }
-  return 'http://localhost:8000';
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/users/`
+    : 'http://localhost:8000/api/users/';
 };
 
 export default function Users() {
@@ -13,7 +12,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${getBaseUrl()}/api/users/`)
+    fetch(getApiUrl())
       .then((response) => response.json())
       .then((data) => {
         setUsers(Array.isArray(data) ? data : data.results || []);
