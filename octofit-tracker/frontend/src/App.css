@@ -1,0 +1,22 @@
+.app-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.page-content {
+  padding: 2rem 0 3rem;
+}
+
+.card {
+  border-radius: 1rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+}
