@@ -1,6 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { connectDatabase, getApiBaseUrl } from './config/database.ts';
+import { connectDatabase } from './config/database.ts';
+
+const getApiBaseUrl = () => {
+  const codespaceName = process.env.CODESPACE_NAME;
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
+};
 
 const app = express();
 app.use(express.json());
